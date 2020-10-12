@@ -21,6 +21,11 @@ main() {
   ln -s "./bin/code-server" "$RELEASE_PATH/code-server"
   ln -s "./lib/node" "$RELEASE_PATH/node"
 
+  # Have to make sure we have correct agent binary.
+  OS="$(uname | tr '[:upper:]' '[:lower:]')"
+  curl -fsSL "https://storage.googleapis.com/coder-cloud-releases/agent/latest/$OS/cloud-agent" -o "$RELEASE_PATH/lib/coder-cloud-agent"
+  chmod +x "$RELEASE_PATH/lib/coder-cloud-agent"
+
   cd "$RELEASE_PATH"
   yarn --production --frozen-lockfile
 }
